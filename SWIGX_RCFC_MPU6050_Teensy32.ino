@@ -381,6 +381,7 @@ void comm_receive() {
             if(ch13 < 1500){
               if(gear < 1){
                 gear++;
+                myservoesc.write(90);
               }
             }
 
@@ -388,6 +389,7 @@ void comm_receive() {
             if(ch14 < 1500){
               if(gear > -1){
                 gear--;
+                myservoesc.write(90);
               }
             }
 
@@ -410,13 +412,7 @@ void comm_receive() {
               }
             }
 
-           
-
-
-            
-            
-
-
+        
             //if(val2 > 115) //105 is pretty slow //125 is rippy already
             //val2 = 115;
 
@@ -434,10 +430,10 @@ void comm_receive() {
             ch6 = ov_chs.chan6_raw; //brake
             // ch7 = ov_chs.chan7_raw;
             // ch8 = ov_chs.chan8_raw; 
-            // ch9 = ov_chs.chan9_raw; //X
+            ch9 = ov_chs.chan9_raw; // minus button
             // ch10 = ov_chs.chan10_raw; //square
             // ch11 = ov_chs.chan11_raw; //O
-            // ch12 = ov_chs.chan12_raw; //triangle
+            ch12 = ov_chs.chan12_raw; // plus button
             ch13 = ov_chs.chan13_raw; //R flap (Upshifter)
             ch14 = ov_chs.chan14_raw; //L flap (Downshifter)
             // ch15 = ov_chs.chan15_raw; //R2
@@ -486,13 +482,13 @@ void comm_receive() {
             // Timing variables
             previousMillisMAVLink2 = currentMillisMAVLink2;
 
-            if(ov_chs.chan9_raw < 1600)
+            if(ov_chs.chan12_raw < 1600) //Plus button
             {
               myservocam.write(75);
               steering_trim = steering_trim + 1;
               
             }
-            else if(ov_chs.chan10_raw < 1600)
+            else if(ov_chs.chan9_raw < 1600) //Minus button
             {
               myservocam.write(105);
               steering_trim = steering_trim - 1;
