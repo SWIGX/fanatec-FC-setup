@@ -108,7 +108,7 @@ int num_hbs_past = num_hbs;
   float pitch = 0;
   float heading = 0;
 
-int steering_trim = 0;//43;
+int steering_trim = -5;//43;
 
 //Default Arduino function
 void setup() {
@@ -150,17 +150,18 @@ void setup() {
   delay(1000);
   IMU.init(calib, IMU_ADDRESS);
   
-  myservo.attach(5,650,1900);
+  myservo.attach(5,544,2400);
   myservoesc.attach(6);//,1000,2000);
  
   myservocam.attach(9);
-  myservocam2.attach(10,650,1900);
+  myservocam2.attach(10,1000,2000);
      
   //SerialMAV.begin(115200);//, SERIAL_8N1, 16, 17);
   myservocam.write(90);
   myservocam2.write(90);
   myservoesc.write(90);
-  myservo.write(135+steering_trim);
+  //myservo.write(135+steering_trim);
+
 
 }
 
@@ -368,8 +369,8 @@ void comm_receive() {
             myservocam.write(val3);*/
             
             //int val = map(ov_chs.chan1_raw, 1300, 1700, 180, 0);   //45
-            int val = map(ov_chs.chan1_raw, 1000, 2000, 135+90, 135-90);   //45
-            myservo.write(val+steering_trim); //trim servo steering //43 for mojave?
+            int val = map(ov_chs.chan1_raw+steering_trim, 1000, 2000, 180, 45);   //45 //135-90y
+            myservo.write(val); //trim servo steering //43 for mojave?
 
             //pedals
             //int val2 = map((-ov_chs.chan3_raw+ov_chs.chan4_raw)/2+1500, 1000, 2000, 0, 180); 
@@ -377,11 +378,10 @@ void comm_receive() {
             //int val2 = map(ov_chs.chan3_raw-(ov_chs.chan2_raw-1500)/10, 1000, 2000, 0, 180); 
             //int scale = map(ov_chs.chan3_raw, 1000, 2000, 90, 110); 
             
-             //Upshifter
+            //Upshifter
             if(ch13 < 1500){
               if(gear < 1){
                 gear++;
-                myservoesc.write(90);
               }
             }
 
@@ -389,30 +389,26 @@ void comm_receive() {
             if(ch14 < 1500){
               if(gear > -1){
                 gear--;
-                myservoesc.write(90);
               }
             }
 
-            if(ch6 < 1800){
-              myservoesc.write(90);
-            }
-            else{
-              if (gear == 1)
-              {
-                // NEW SPEEDER 
-                int speed = map(ov_chs.chan3_raw, 1000, 2000, 130, 90); 
-                myservoesc.write(speed);
-              }
 
-              else if (gear == -1)
-              {
-                // NEW REVERSE SPEED
-                int backSpeed = map(ov_chs.chan3_raw, 1000, 2000, 70, 90);
-                myservoesc.write(backSpeed);
-              }
+            if (gear == 1)
+            {
+              // NEW SPEEDER 
+              int speed = map(ov_chs.chan3_raw, 1000, 2000, 130, 90); 
+              myservoesc.write(speed);
             }
 
-        
+            else if (gear == -1)
+            {
+              // NEW REVERSE SPEED
+              int backSpeed = map(ov_chs.chan3_raw, 1000, 2000, 70, 90);
+              myservoesc.write(backSpeed);
+            }
+            
+
+
             //if(val2 > 115) //105 is pretty slow //125 is rippy already
             //val2 = 115;
 
@@ -430,10 +426,10 @@ void comm_receive() {
             ch6 = ov_chs.chan6_raw; //brake
             // ch7 = ov_chs.chan7_raw;
             // ch8 = ov_chs.chan8_raw; 
-            ch9 = ov_chs.chan9_raw; // minus button
+            // ch9 = ov_chs.chan9_raw; //X
             // ch10 = ov_chs.chan10_raw; //square
             // ch11 = ov_chs.chan11_raw; //O
-            ch12 = ov_chs.chan12_raw; // plus button
+            // ch12 = ov_chs.chan12_raw; //triangle
             ch13 = ov_chs.chan13_raw; //R flap (Upshifter)
             ch14 = ov_chs.chan14_raw; //L flap (Downshifter)
             // ch15 = ov_chs.chan15_raw; //R2
@@ -482,13 +478,13 @@ void comm_receive() {
             // Timing variables
             previousMillisMAVLink2 = currentMillisMAVLink2;
 
-            if(ov_chs.chan12_raw < 1600) //Plus button
+            if(ov_chs.chan9_raw < 1600)
             {
               myservocam.write(75);
               steering_trim = steering_trim + 1;
               
             }
-            else if(ov_chs.chan9_raw < 1600) //Minus button
+            else if(ov_chs.chan10_raw < 1600)
             {
               myservocam.write(105);
               steering_trim = steering_trim - 1;
