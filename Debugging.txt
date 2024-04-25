@@ -1,0 +1,8 @@
+Debugging af flightcontroller/Teensy:
+	- Batterilevetid er meget kort
+	- Kan ikke altid stole på UI, selvom den ikke finder en flightcontroller kan der stadig godt være forbindelse
+	- Powersupply virker dårligt under load
+	- Vær sikker på at der ikke er andre air units på samme frekvens
+	- Løse forbindelser
+	- Støj i ledninger/fuglereden?
+	- Skal finde flightcontroller ifm. boot, ellers virker det ikke

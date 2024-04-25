@@ -1,0 +1,211 @@
+PWM til hjul med remote RC controller dims (original):
+Periode: 17,5ms
+
+Stilstand:
+	Høj: 1,6ms (9,14% af tiden)
+
+Fuld højre:
+	Høj: 1ms (5,71% af tiden)
+
+Fuld venstre:
+	Høj: 2,1 ms (12,00% af tiden)
+
+___________________________________________________________
+PWM til hjul med teensy + hjul (uden steering-trim):
+Periode: 19,98ms
+
+Stilstand:
+	Høj: 1,47ms (7,3% af tiden)
+
+Fuld højre:
+	Høj: 0,891ms (4,46% af tiden)
+
+Fuld venstre:
+	Høj: 1,89ms (9,46% af tiden)
+___________________________________________________________
+PWM til hjul med teensy + hjul (med steering-trim på 20):
+Periode: 19,98ms
+
+Stilstand:
+	Høj: 1,70ms (8,50% af tiden)
+
+Fuld højre:
+	Høj: 1,10ms (5,50% af tiden)
+
+Fuld venstre:
+	Høj: 1,88ms (9,41% af tiden)
+
+___________________________________________________________
+
+PWM til hjul med teensy + hjul (med steering-trim på 40):
+Periode: 19,96ms
+
+Stilstand:
+	Høj: 1,84ms (9,22% af tiden)
+
+Fuld højre:
+	Høj: 1,21ms (5,61% af tiden)
+
+Fuld venstre:
+	Høj: 1,88ms (9,41% af tiden)
+
+______________________________________________________________
+
+PWM til hjul med teensy + hjul (med steering-trim på 40):
+Venstre har range på 135 + 120.
+Periode: 20,00ms
+
+Stilstand:
+	Høj: 1,88ms (9,4% af tiden)
+
+Fuld højre:
+	Høj: 1,23ms (6,15% af tiden)
+
+Fuld venstre:
+	Høj: 1,88ms (9,4% af tiden)
+______________________________________________________________
+
+PWM til hjul med teensy + hjul (med steering-trim på 0):
+Venstre har range på 135 + 65.
+Periode: 20,00ms
+
+Stilstand:
+	Høj: 1,48ms (7,4% af tiden)
+
+Fuld højre:
+	Høj: 0,95ms (4,75% af tiden)
+
+Fuld venstre:
+	Høj: 1,88ms (9,4% af tiden)
+
+______________________________________________________________
+
+PWM til hjul med teensy + hjul (med steering-trim på 35):
+Venstre har range på 135 + 65.
+Periode: 20,00ms
+
+Stilstand:
+	Høj: 1,72ms (8,6% af tiden)
+
+Fuld højre:
+	Høj: 1,19ms (6,0% af tiden)
+
+Fuld venstre:
+	Høj: 1,88ms (9,4% af tiden)
+
+______________________________________________________________
+
+PWM til hjul med teensy + hjul (med steering-trim på 0):
+Venstre har range på 300.
+Højre har range på 0
+Periode: 20,00ms
+
+Stilstand:
+	Høj: 1,68ms (8,4% af tiden)
+
+Fuld højre:
+	Høj: 0,63ms (3,15% af tiden)
+
+Fuld venstre:
+	Høj: 1,88ms (9,4% af tiden)
+
+______________________________________________________________
+
+PWM til hjul med teensy + hjul (med steering-trim på 0):
+Venstre har range på 45.
+Højre har range på -180
+Periode: 20,00ms
+
+Stilstand:
+	Høj: 0,64ms (% af tiden)
+
+Fuld højre:
+	Høj: 0,64ms (% af tiden)
+
+Fuld venstre:
+	Høj: 0,95ms (% af tiden)
+
+______________________________________________________________
+
+PWM til hjul med teensy + hjul (med steering-trim på 0):
+Venstre har range på 45.
+Højre har range på 0
+Periode: 20,00ms
+
+Stilstand:
+	Høj: 0,79ms (% af tiden)
+
+Fuld højre:
+	Høj: 0,63ms (% af tiden)
+
+Fuld venstre:
+	Høj: 0,95ms (% af tiden)
+
+______________________________________________________________
+
+PWM til hjul med teensy + hjul (med steering-trim på 0):
+Venstre har range på 180.
+Højre har range på 90
+Periode: 20,00ms
+
+Stilstand:
+	Høj: 1,57ms (% af tiden)
+
+Fuld højre:
+	Høj: 1,25ms (% af tiden)
+
+Fuld venstre:
+	Høj: 1,88ms (% af tiden)
+
+
+______________________________________________________________
+
+PWM til hjul med teensy + hjul (med steering-trim på 0):
+Venstre har range på 180.
+Højre har range på 120
+Periode: 20,00ms
+
+Stilstand:
+	Høj: 1,68ms (% af tiden)
+
+Fuld højre:
+	Høj: 1,46ms (% af tiden)
+
+Fuld venstre:
+	Høj: 1,88ms (% af tiden)
+
+______________________________________________________________
+
+PWM til hjul med teensy + hjul (med steering-trim på 0):
+Venstre har range på 180.
+Højre har range på 0
+myservo.attach(5, 544, 2400)
+Periode: 20,00ms
+
+Stilstand:
+	Høj: 1,47ms (7,35% af tiden)
+
+Fuld højre:
+	Høj: 0,54ms (2,7% af tiden)
+
+Fuld venstre:
+	Høj: 2,39ms (11,95% af tiden)
+
+______________________________________________________________
+
+PWM til hjul med teensy + hjul (med steering-trim på 0):
+Venstre har range på 180.
+Højre har range på 45
+myservo.attach(5, 544, 2400)
+Periode: 20,00ms
+
+Stilstand:
+	Høj: 1,69ms (8,45% af tiden)
+
+Fuld højre:
+	Høj: 1,01ms (5,05% af tiden)
+
+Fuld venstre:
+	Høj: 2,40ms (12,00% af tiden)
+
+
