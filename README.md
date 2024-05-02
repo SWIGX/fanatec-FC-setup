@@ -111,3 +111,21 @@ if (gear == 1)
 
 
 ## 4. Troubleshooting
+### Battery
+While using the RC car it is very important to check if the battery has enough power to properly power the air unit along with the flight controller. This can be checked on QOpenHD while the air unit is connected. The batteries have a short lifetime, and even though we can connect to the air unit, if the power is too low, then the flight controller won't work properly. This can be mitigated by connecting a powersupply (other than the battery) directly to the air unit. The battery can then be used to power only the flight controller, the camera and the accelerometer.
+
+### QOpenHD UI
+The UI in QOpenHD doesn't always display correct data. For instance, sometimes the flight controller appeared as disconnected, while in reality, it was connected. We found, that as long as the air unit displays "Found 1" (for the flight controller) under status in QOpenHD, then the flight controller is connected, even though the status of the flight controller appears as disconnected.
+(INSERT PICTURE OF THIS)
+
+### Battery under load
+As mentioned above the battery has a short usage time. While debugging the battery, we found, that if you measure the voltage of the battery without load, it appears as working fine. However, when the battery is under load, we found that the voltage probably dropped quickly to an insufficient value. However, we couldn't make a concrete conclusion due to limited measuring equipment.
+
+### Ensuring connection to the right air unit
+It is important that you communicate with the air unit on a frequency with low activity. If another group is using an air unit on the same frequency, then the ground station might connect to the wrong air unit. This can be hard to detect, if their air unit is the same Raspberry Pi model as yours.
+
+### Loose connections
+The RC setup is kinda janky. There are a lot of intertwined wires. Due to this a lot of hardware problems can occur, such as electrical noise/disturbance and loose connections. Make sure that you have a clear overview of which wire does what, and that they are connected properly. It is also important to check, that the wires are made correctly, so they actually function as expected.
+
+### Flight controller during boot
+The flight controller must be up and running when the air unit is booted. Otherwise the air unit might not be able to find the flight controller.
