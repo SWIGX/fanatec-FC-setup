@@ -41,7 +41,7 @@ The `SWIGX_RCFC_MPU6050_Teensy32.ino` file have som imports from a few different
 | MadgwickAHRS | 1.2.0   |
 | FastIMU      | 1.2.6   |
 
-After downloading all the packages you should now be click on the `checkmark`(Verify) in left corner. You will receive alot of errors when compiling, but don't worry. If a little windows popus up with this image, it is ready.
+After downloading all the packages you should now be click on the `checkmark`(Verify) in left corner. You will receive alot of errors when compiling, but don't worry. If a little windows popus up with this image, it is ready. Then simply just follow the guide, and press the button on the Teensy to program the new code.
 
 ![](https://github.com/SWIGX/fanatec-FC-setup/blob/main/Images/Teensy_programmer.png?raw=true)
 
@@ -72,7 +72,7 @@ Below you will see the how the Fanatac steering wheel/buttons is connected to th
 | 13                | Upshifter         | 1000-2000 | 2000                          |                                                                             |
 | 14                | Downshifter       | 1000-2000 | 2000                          |                                                                             |
 | 15                | Arrow-down-button | 1000-2000 | 2000                          |                                                                             |
-| 16                | Button-1          | 1000-2000 | 2000                          |                                                                             |
+| 16                | Button-1          | 1000-2000 | 2000                          | See notes about differential                                                |
 | 17                | Button-4          | 1000-2000 | 2000                          |                                                                             |
 | 18                | Button-3          | 1000-2000 | 2000                          |                                                                             |
 
@@ -141,6 +141,14 @@ else if (gear == -1)
 }
 ```
 
+### Car differentials
+
+The car has three differentials: front, rear, and center. The front and rear differentials are responsible for managing individual wheel speeds, which is essential for smooth cornering. The center differential, distributes power between the front and rear axles.
+
+Locking the front and rear differentials can improve traction on slippery surfaces by forcing both wheels on each axle to rotate at the same speed. This can be helpful in off-road situations or when dealing with challenging weather conditions.
+
+While the code for the differentials are here in this repository, the physical parts are missing. On the car the differential needs to be connected to the controller, so it can get power and a pvm signal.
+
 ## 4. Troubleshooting/Debugging
 
 ### Battery
@@ -167,3 +175,7 @@ The RC setup is kinda janky. There are a lot of intertwined wires. Due to this a
 ### Flight controller during boot
 
 The flight controller must be up and running when the air unit is booted. Otherwise the air unit might not be able to find the flight controller.
+
+### Unknown Servo
+
+The documentation of the RC car does not include information about the servo motor. Therefore, in order to find the right mappings between the raw channel data and the data send to the motor, we had to do a lot of trial and error with different values.
