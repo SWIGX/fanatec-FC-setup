@@ -67,9 +67,9 @@ Below you will see the how the Fanatac steering wheel/buttons is connected to th
 | 13      | Upshifter          | 1000-2000 | 2000                         |                          |
 | 14      | Downshifter        | 1000-2000 | 2000                         |                          |
 | 15      | Arrow-down-button  | 1000-2000 | 2000                         |                          |
-| 16      | Button-1           | 1000-2000 | 2000                         |                          |
-| 17      | Button-4           | 1000-2000 | 2000                         |                          |
-| 18      | Button-3           | 1000-2000 | 2000                         |                          |
+| 16      | Button-1           | 1000-2000 | 2000                         | See notes about differential                         |
+| 17      | Button-4           | 1000-2000 | 2000                         | --||--                         |
+| 18      | Button-3           | 1000-2000 | 2000                         | --||--                         |
 
 The above channels is visualized in the code below which you can find in the Github code.
 
@@ -102,6 +102,15 @@ if (gear == 1)
     myservoesc.write(speed);
 }
 ````
+
+### Car differentials
+The car has three differentials: front, rear, and center. The front and rear differentials are responsible for managing individual wheel speeds, which is essential for smooth cornering. The center differential, distributes power between the front and rear axles.
+
+Locking the front and rear differentials can improve traction on slippery surfaces by forcing both wheels on each axle to rotate at the same speed. This can be helpful in off-road situations or when dealing with challenging weather conditions.
+
+While the code for the differentials are here in this repository, the physical parts are missing. On the car the differential needs to be connected to the controller, so it can get power and a pvm signal. 
+
+
 
 
 
