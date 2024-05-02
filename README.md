@@ -110,7 +110,7 @@ if (gear == 1)
 
 
 
-## 4. Troubleshooting
+## 4. Troubleshooting/Debugging
 ### Battery
 While using the RC car it is very important to check if the battery has enough power to properly power the air unit along with the flight controller. This can be checked on QOpenHD while the air unit is connected. The batteries have a short lifetime, and even though we can connect to the air unit, if the power is too low, then the flight controller won't work properly. This can be mitigated by connecting a powersupply (other than the battery) directly to the air unit. The battery can then be used to power only the flight controller, the camera and the accelerometer.
 
