@@ -176,6 +176,13 @@ The RC setup is kinda janky. There are a lot of intertwined wires. Due to this a
 
 The flight controller must be up and running when the air unit is booted. Otherwise the air unit might not be able to find the flight controller.
 
+Below we see the screen from the system status, here we see it says `NOT FOUND`, and this means that the Air unit has no connection to the Flight Controller.
+![](https://github.com/SWIGX/fanatec-FC-setup/blob/main/Images/Not_Connected.png?raw=true)
+
+This image is more correct, because we can see it says `FOUND:1`. To the right we that the Flight Controller is alive, but if this side turns gray, don't worry, the flight Controller should still be working.
+
+![](https://github.com/SWIGX/fanatec-FC-setup/blob/main/Images/All_Connected.png?raw=true)
+
 ### Unknown Servo
 
 The documentation of the RC car does not include information about the servo motor. Therefore, in order to find the right mappings between the raw channel data and the data send to the motor, we had to do a lot of trial and error with different values.
