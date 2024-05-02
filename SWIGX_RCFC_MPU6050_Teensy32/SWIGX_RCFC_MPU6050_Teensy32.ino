@@ -33,6 +33,13 @@ PWMServo myservoesc;
 PWMServo myservocam;
 PWMServo myservocam2;
 
+PWMServo myservofrontdif;
+PWMServo myservomiddledif;
+PWMServo myservobackdif;
+bool is_back_dif_open = false;
+bool is_midddle_dif_open = false;
+bool is_front_dif_open = false;
+
 Madgwick filter;
 
 //Available flight modes
@@ -155,6 +162,11 @@ void setup() {
   
   myservo.attach(5,544,2400);
   myservoesc.attach(6);//,1000,2000);
+
+  //Differentials controls
+  // myservofrontdif.attach(123);
+  // myservomiddledif.attach(123);
+  // myservobackdif.attach(123);
  
   myservocam.attach(9);
   myservocam2.attach(10,1000,2000);
@@ -408,6 +420,46 @@ void comm_receive() {
               steering_trim = steering_trim + 1;
               
             }
+
+
+            if(ch16 < 1500){
+              if(is_middle_dif_open){
+                //Find out what PWM corresponds to closed
+                // myservomiddledif.write()
+                is_middle_dif_open = false;
+              }
+              else{
+                //Find out what PWM corresponds to open
+                // myservomiddledif.write()
+                is_middle_dif_open = true;
+              }
+            }
+
+            if(ch17 < 1500){
+              if(is_back_dif_open){
+                //Find out what PWM corresponds to closed
+                // myservobackdif.write()
+                is_back_dif_open = false;
+              }
+              else{
+                //Find out what PWM corresponds to open
+                // myservobackdif.write()
+                is_back_dif_open = true;
+              }
+            }
+
+            if(ch18 < 1500){
+              if(is_front_dif_open){
+                //Find out what PWM corresponds to closed
+                // myservofrontdif.write()
+                is_front_dif_open = false;
+              }
+              else{
+                //Find out what PWM corresponds to open
+                // myservofrontdif.write()
+                is_front_dif_open = true;
+              }
+            }
             
 
             //FANATEC wheel and pedals
@@ -424,9 +476,9 @@ void comm_receive() {
             ch13 = ov_chs.chan13_raw; //R flap (Upshifter)
             ch14 = ov_chs.chan14_raw; //L flap (Downshifter)
             // ch15 = ov_chs.chan15_raw; //Arrow down button
-            // ch16 = ov_chs.chan16_raw; //Button 1
-            // ch17 = ov_chs.chan17_raw; //Button 4
-            // ch18 = ov_chs.chan18_raw; //Button 3
+            ch16 = ov_chs.chan16_raw; //Button 1 - Used for middle differential
+            ch17 = ov_chs.chan17_raw; //Button 4 - Used for back differential
+            ch18 = ov_chs.chan18_raw; //Button 3 - Used for front differential
 
 
             
