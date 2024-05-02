@@ -111,7 +111,7 @@ int num_hbs_past = num_hbs;
   float pitch = 0;
   float heading = 0;
 
-int steering_trim = -5;//43;
+int steering_trim = 0;//43;
 
 //Default Arduino function
 void setup() {
