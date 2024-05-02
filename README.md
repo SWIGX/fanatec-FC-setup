@@ -52,59 +52,62 @@ Here is a small description about the Teensy 3.2, and some important pins we are
 
 ## Overview of channels from Fanatac wheel
 
-Channel1 - rat
--- 1500 midten
--- til venstre ned -- 1000 min -- fra midt 1.5 rotation til min
--- til højre op -- 2000 max -- fra midt 1.5 rotation til max
+Below you will see the how the Fanatac steering wheel/buttons is connected to the OpenHD channels which connetcs to the Teensy FlightController channels in the code.
 
-Channel16 - button1
--- 1000 - 2000
--- Normally 2000, when pressed 1000
+| OpenHD - Channels | Fanatec reference  | PWM Range | Initial value                | Description                  |
+| ------- | -----------------  |  -------  | ---------------------------- | ---------------------------- | 
+| 1       | Steering wheel     | 1000-2000 | 1500 (Middle of the steering)| If you turn the wheel 1.5 rotation to left or right you will reach max/min.                         |
+| 2       | Clutch             | 1000-2000 | 2000                         |                          |
+| 3       | Throttle           | 1000-2000 | 2000                         |                          |
+| 6       | Brake              | 1000-2000 | 2000                         |                          |
+| 9       | Minus-button       | 1000-2000 | 2000                         |                          |
+| 10      | Eye-button         | 1000-2000 | 2000                         |                          |
+| 11      | !-button           | 1000-2000 | 2000                         |                          |
+| 12      | Plus-button        | 1000-2000 | 2000                         |                          |
+| 13      | Upshifter          | 1000-2000 | 2000                         |                          |
+| 14      | Downshifter        | 1000-2000 | 2000                         |                          |
+| 15      | Arrow-down-button  | 1000-2000 | 2000                         |                          |
+| 16      | Button-1           | 1000-2000 | 2000                         |                          |
+| 17      | Button-4           | 1000-2000 | 2000                         |                          |
+| 18      | Button-3           | 1000-2000 | 2000                         |                          |
 
-Channel18 - button3
--- 1000 - 2000
--- Normally 2000, when pressed 1000
+The above channels is visualized in the code below which you can find in the Github code.
 
-Channel17 - button4
--- 1000 - 2000
--- Normally 2000, when pressed 1000
+```` C
+//FANATEC wheel and pedals
+ch1 = ov_chs.chan1_raw; //steering
+ch2 = ov_chs.chan2_raw; //clutch
+ch3 = ov_chs.chan3_raw; //throttle
+ch6 = ov_chs.chan6_raw; //brake
+ch9 = ov_chs.chan9_raw; //- button
+ch10 = ov_chs.chan10_raw; //eye button
+ch11 = ov_chs.chan11_raw; //! button
+ch12 = ov_chs.chan12_raw; //+ button
+ch13 = ov_chs.chan13_raw; //R flap (Upshifter)
+ch14 = ov_chs.chan14_raw; //L flap (Downshifter)
+ch15 = ov_chs.chan15_raw; //Arrow down button
+ch16 = ov_chs.chan16_raw; //Button 1 - Used for middle differential
+ch17 = ov_chs.chan17_raw; //Button 4 - Used for back differential
+ch18 = ov_chs.chan18_raw; //Button 3 - Used for front differential
 
-Channel15 - pil ned
--- 1000 - 2000
--- Normally 2000, when pressed 1000
+````
 
-channel12 -- + knap
--- 1000 - 2000
--- Normally 2000, when pressed 1000
+So for example the code block below shows that we uses `ov_chs.chan3_raw` directly into the map function, write the correct speed to our `myservoesc`, which is our speed. The range is as above from 1000 to 2000 in PWM, and the max value is `130`, and min is `90` which is idle.
 
-channel9 -- minus knap
--- 1000 - 2000
--- Normally 2000, when pressed 1000
+```` C
+if (gear == 1)
+{
+    // NEW SPEEDER 
+    int speed = map(ov_chs.chan3_raw, 1000, 2000, 130, 90); 
+    myservoesc.write(speed);
+}
+````
 
-channel10 - eye
--- 1000 - 2000
--- Normally 2000, when pressed 1000
 
-channel11 - ! knap
--- 1000 - 2000
--- Normally 2000, when pressed 1000
 
-channel14 - downshifter
--- 1000 - 2000
--- Normally 2000, when pressed 1000
 
-channel13 - upshifter
--- 1000 - 2000
--- Normally 2000, when pressed 1000
 
-channel3 - speeder
-normal 2000
-fuld tryk 1000
 
-channel6 - bremse
-normal 2000
-fuld tryk 1000
 
-channel2 - kobling
-normal 2000
-fuld tryk 1000
+
+## 4. Troubleshooting
