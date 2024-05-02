@@ -372,6 +372,7 @@ void comm_receive() {
             //Upshifter
             if(ch13 < 1500){
               if(gear < 1){
+                myservoesc.write(90);
                 gear++;
               }
             }
@@ -379,6 +380,7 @@ void comm_receive() {
             //Downshifter
             if(ch14 < 1500){
               if(gear > -1){
+                myservoesc.write(90);
                 gear--;
               }
             }
@@ -421,7 +423,7 @@ void comm_receive() {
               
             }
 
-
+            //Minus mod højre og plus mod venstre.
             if(ch16 < 1500){
               if(is_middle_dif_open){
                 //Find out what PWM corresponds to closed
