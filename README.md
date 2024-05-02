@@ -149,6 +149,9 @@ Locking the front and rear differentials can improve traction on slippery surfac
 
 While the code for the differentials are here in this repository, the physical parts are missing. On the car the differential needs to be connected to the controller, so it can get power and a pvm signal.
 
+!["sejt"](Images/hmr_VB-X.png)
+This is the differential controller.
+
 ## 4. Troubleshooting/Debugging
 
 ### Battery
