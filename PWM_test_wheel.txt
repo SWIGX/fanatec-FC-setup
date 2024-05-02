@@ -1,4 +1,4 @@
-PWM til hjul med remote RC controller dims (original):
+PWM til hjul med remote RC controller dims (original joystick):
 Periode: 17,5ms
 
 Stilstand:
