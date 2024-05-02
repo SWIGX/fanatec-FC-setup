@@ -97,6 +97,9 @@ unsigned long next_interval_MAVLink2 = 1000;  // next interval to count
 
 
 int gear = 0;
+bool plus_button_pressed = false;
+bool minus_button_pressed = false;
+
 
 const int num_hbs = 60;                      // # of heartbeats to wait before activating STREAMS from APM. 60 = one minute.
 int num_hbs_past = num_hbs;
@@ -189,7 +192,7 @@ void loop() {
     previousMillisMAVLink2 = currentMillisMAVLink2;
     
     myservoesc.write(90);
-    myservo.write(90+steering_trim); //myservo.write(90+43); //original mojave offset
+    // myservo.write(90+steering_trim); //myservo.write(90+43); //original mojave offset
 
     mav_heartbeat_pack();
   }
@@ -349,34 +352,10 @@ void comm_receive() {
             current_yaw = ov_chs.chan4_raw;
 
             current_throttle = ov_chs.chan3_raw;
-  /*
-            Serial.print("Overr. Roll: ");  Serial.print(ov_chs.chan1_raw);
-            Serial.println();
-            Serial.print("Overr. Pitch: ");  Serial.print(ov_chs.chan2_raw + '\n');
-            Serial.println();
-            Serial.print("Overr. Throttle: ");  Serial.print(ov_chs.chan3_raw + '\n');
-            Serial.println();
-            Serial.print("Overr. Yaw: ");  Serial.print(ov_chs.chan4_raw + '\n');
-            Serial.println();
-            */
-            //joystick
-            /*
-            int val = map(ov_chs.chan1_raw, 1000, 2000, 180, 45);   
-            myservo.write(val); 
-            int val2 = map(ov_chs.chan2_raw, 1000, 2000, 180, 0); 
-            myservoesc.write(val2);
-            int val3 = map(ov_chs.chan4_raw, 1000, 2000, 180, 0); 
-            myservocam.write(val3);*/
             
-            //int val = map(ov_chs.chan1_raw, 1300, 1700, 180, 0);   //45
-            int val = map(ov_chs.chan1_raw+steering_trim, 1000, 2000, 180, 45);   //45 //135-90y
-            myservo.write(val); //trim servo steering //43 for mojave?
-
-            //pedals
-            //int val2 = map((-ov_chs.chan3_raw+ov_chs.chan4_raw)/2+1500, 1000, 2000, 0, 180); 
-            //MACH 2
-            //int val2 = map(ov_chs.chan3_raw-(ov_chs.chan2_raw-1500)/10, 1000, 2000, 0, 180); 
-            //int scale = map(ov_chs.chan3_raw, 1000, 2000, 90, 110); 
+            //Mapping raw channel data to steering intervals
+            int val = map(ov_chs.chan1_raw, 1000, 2000, 180, 45); 
+            myservo.write(val+steering_trim); 
             
             //Upshifter
             if(ch13 < 1500){
@@ -406,102 +385,54 @@ void comm_receive() {
               int backSpeed = map(ov_chs.chan3_raw, 1000, 2000, 70, 90);
               myservoesc.write(backSpeed);
             }
-            
 
-
-            //if(val2 > 115) //105 is pretty slow //125 is rippy already
-            //val2 = 115;
-
-            //if(val2 < 60)
-            //val2 = 60;
-            //int val3 = map(ov_chs.chan2_raw, 1000, 2000, 100, 0); 
+            //If the minus button has previosly been pressed, but is now released
+            if(ch9 > 1600 && minus_button_pressed == true){
+              minus_button_pressed = false;
+            }
+            //If the minus button is being pressed and we are in the "first cycle" of the loop
+            if(ch9 < 1600 && minus_button_pressed == false)
+            {
+              minus_button_pressed = true;
+              steering_trim = steering_trim - 1;
+              
+            }
+            //If the plus button has previosly been pressed, but is now released
+             if(ch12 > 1600 && plus_button_pressed == true){
+              plus_button_pressed = false;
+            }
+            //If the plus button is being pressed and we are in the "first cycle" of the loop
+            if(ch12 < 1600 && plus_button_pressed == false)
+            {
+              plus_button_pressed = true;
+              steering_trim = steering_trim + 1;
+              
+            }
             
 
             //FANATEC wheel and pedals
             ch1 = ov_chs.chan1_raw; //steering
             ch2 = ov_chs.chan2_raw; //clutch
             ch3 = ov_chs.chan3_raw; //throttle
-            // ch4 = ov_chs.chan4_raw; //brake
-            // ch5 = ov_chs.chan5_raw; //arrows combo
+
             ch6 = ov_chs.chan6_raw; //brake
-            // ch7 = ov_chs.chan7_raw;
-            // ch8 = ov_chs.chan8_raw; 
-            // ch9 = ov_chs.chan9_raw; //X
-            // ch10 = ov_chs.chan10_raw; //square
-            // ch11 = ov_chs.chan11_raw; //O
-            // ch12 = ov_chs.chan12_raw; //triangle
+ 
+            ch9 = ov_chs.chan9_raw; //- button
+            // ch10 = ov_chs.chan10_raw; //eye button
+            // ch11 = ov_chs.chan11_raw; //! button
+            ch12 = ov_chs.chan12_raw; //+ button
             ch13 = ov_chs.chan13_raw; //R flap (Upshifter)
             ch14 = ov_chs.chan14_raw; //L flap (Downshifter)
-            // ch15 = ov_chs.chan15_raw; //R2
-            // ch16 = ov_chs.chan16_raw; //L2
-            // ch17 = ov_chs.chan17_raw; //share
-            // ch18 = ov_chs.chan18_raw; //options
+            // ch15 = ov_chs.chan15_raw; //Arrow down button
+            // ch16 = ov_chs.chan16_raw; //Button 1
+            // ch17 = ov_chs.chan17_raw; //Button 4
+            // ch18 = ov_chs.chan18_raw; //Button 3
 
 
-            //G29 wheel and pedals
-            // ch1 = ov_chs.chan1_raw; //steering
-            // ch2 = ov_chs.chan2_raw; //clutch
-            // ch3 = ov_chs.chan3_raw; //throttle
-            // ch4 = ov_chs.chan4_raw; //brake
-            // ch5 = ov_chs.chan5_raw; //arrows combo
-            // ch6 = ov_chs.chan6_raw; //arrows combo
-            // ch7 = ov_chs.chan7_raw;
-            // ch8 = ov_chs.chan8_raw; 
-            // ch9 = ov_chs.chan9_raw; //X
-            // ch10 = ov_chs.chan10_raw; //square
-            // ch11 = ov_chs.chan11_raw; //O
-            // ch12 = ov_chs.chan12_raw; //triangle
-            // ch13 = ov_chs.chan13_raw; //R flap
-            // ch14 = ov_chs.chan14_raw; //L flap
-            // ch15 = ov_chs.chan15_raw; //R2
-            // ch16 = ov_chs.chan16_raw; //L2
-            // ch17 = ov_chs.chan17_raw; //share
-            // ch18 = ov_chs.chan18_raw; //options
-
-            //MACH 2 Joystick
-            //th = ch3 //center 1500
-            //yaw = ch4
-            //pitch = ch2
-            //roll = ch1
-            //A1 = 11 //off = 2000, on = 1000
-            //A2 = 12
-            //A3 = 13
-            //C1 = 14
-            //C2 = 15
-            //FLAP UP = 9
-            //FLAP DOWN = 10
-                        
-            // Serial.print("servo: ");  Serial.print(ov_chs.chan1_raw + '\n');
-            // Serial.println();
-            //myservocam.write(val3);
+            
             unsigned long currentMillisMAVLink2 = millis();
             // Timing variables
             previousMillisMAVLink2 = currentMillisMAVLink2;
-
-            if(ov_chs.chan9_raw < 1600)
-            {
-              myservocam.write(75);
-              steering_trim = steering_trim + 1;
-              
-            }
-            else if(ov_chs.chan10_raw < 1600)
-            {
-              myservocam.write(105);
-              steering_trim = steering_trim - 1;
-            }
-            else{myservocam.write(90);}
-
-            if(ch12 > 1600)
-              {myservocam2.write(70);
-              
-              }
-            else{myservocam2.write(90);}
-
-          //  if(ch9 > 1600)
-          //    digitalWrite(33, HIGH);
-          //  else
-          //    digitalWrite(33, LOW);
-                        
           }
           break;
       }
