@@ -129,3 +129,7 @@ The RC setup is kinda janky. There are a lot of intertwined wires. Due to this a
 
 ### Flight controller during boot
 The flight controller must be up and running when the air unit is booted. Otherwise the air unit might not be able to find the flight controller.
+
+
+### Unknown Servo
+The documentation of the RC car does not include information about the servo motor. Therefore, in order to find the right mappings between the raw channel data and the data send to the motor, we had to do a lot of trial and error with different values.

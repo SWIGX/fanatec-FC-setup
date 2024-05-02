@@ -37,7 +37,7 @@ PWMServo myservofrontdif;
 PWMServo myservomiddledif;
 PWMServo myservobackdif;
 bool is_back_dif_open = false;
-bool is_midddle_dif_open = false;
+bool is_middle_dif_open = false;
 bool is_front_dif_open = false;
 
 Madgwick filter;
