@@ -189,3 +189,9 @@ This image is more correct, because we can see it says `FOUND:1`. To the right w
 ### Unknown Servo
 
 The documentation of the RC car does not include information about the servo motor. Therefore, in order to find the right mappings between the raw channel data and the data send to the motor, we had to do a lot of trial and error with different values.
+
+### Debugging the Servo
+
+One of the main problems we where experincing with the car was uneven steering. The car would turn more to the right than the left. Therefore we undervent extensive debugging with an analog discovery 2 to research which offset would solve this issue. Firstly we tested with the normal remote controller, because the issue didn't appear when using this. We then tested with the steering wheel and tried to match the PWM signal with the PWM signal obsevered with the remote controller.
+  
+Here we analyzed a lot of different PWM signals with different steering-trims. We observed unexptected behavior during this testing, and was unable to find the exact pattern of what was happening. Therefore we changed tactics and researched the myservo.attach() function. We found a different setup for this, with other parameters. The parameters:  myservo.attach(5,544,2400); made it work. The steering has now been improved to work as expected with the wheel. Furthermore we implemented a way to adjust the steering trim with + and - buttons if needed for calibration. 
