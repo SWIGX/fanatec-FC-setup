@@ -280,7 +280,7 @@ void Hall::update() {
     }
 
     _latestIntervalMs = static_cast<float>(intervalCopyUs) / 1000.0f;
-    _rpm = 20000.0f / (static_cast<float>(_pulsesPerRevolution) * static_cast<float>(intervalCopyUs));
+    _rpm = 60000000.0f / (static_cast<float>(_pulsesPerRevolution) * static_cast<float>(intervalCopyUs));
     _validRPM = true;
     _lastMeasurementMs = nowMs;
 

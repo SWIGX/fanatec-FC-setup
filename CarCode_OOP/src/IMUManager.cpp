@@ -63,3 +63,11 @@ float IMUManager::getPitch() const {
 float IMUManager::getYaw() const {
     return yaw;
 }
+
+float IMUManager::getAccelX() const {
+    return accelData.accelX;
+}
+
+float IMUManager::getAccelY() const {
+    return accelData.accelY;
+}

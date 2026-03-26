@@ -72,7 +72,7 @@ void MAVLinkManager::process() {
     }
 }
 
-void MAVLinkManager::update(float roll, float pitch, float throttle, float yaw, int16_t hallSlope) {
+void MAVLinkManager::update(float roll, float pitch, float throttle, float yaw, int16_t hallSlope, float rpm, uint8_t grip) {
     unsigned long now = millis();
 
     if ((now - prevHeartbeat) >= heartbeatInterval) {
@@ -82,7 +82,7 @@ void MAVLinkManager::update(float roll, float pitch, float throttle, float yaw, 
 
     if ((now - prevAttitude) >= attitudeInterval) {
         prevAttitude = now;
-        sendAttitude(roll, pitch, throttle, yaw, hallSlope);
+        sendAttitude(roll, pitch, throttle, yaw, hallSlope, rpm, grip);
     }
 }
 
@@ -97,7 +97,7 @@ void MAVLinkManager::sendHeartbeat() {
     port->write(buf, len);
 }
 
-void MAVLinkManager::sendAttitude(float roll, float pitch, float throttle, float yaw, int16_t hallSlope) {
+void MAVLinkManager::sendAttitude(float roll, float pitch, float throttle, float yaw, int16_t hallSlope, float rpm, uint8_t grip) {
     if (!port) return;
 
     mavlink_message_t msg;
@@ -120,8 +120,8 @@ void MAVLinkManager::sendAttitude(float roll, float pitch, float throttle, float
         1,
         500,
         static_cast<uint16_t>(hallSlope),  // erstatter 7400
-        300,
-        50,
+        static_cast<uint16_t>(rpm),
+        static_cast<int8_t>(grip),
         0,
         0,
         0,

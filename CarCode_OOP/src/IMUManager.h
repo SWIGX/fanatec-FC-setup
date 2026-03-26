@@ -17,6 +17,8 @@ public:
     float getRoll() const;
     float getPitch() const;
     float getYaw() const;
+    float getAccelX() const;
+    float getAccelY() const;
 
 private:
     MPU6050 IMU;

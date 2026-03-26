@@ -11,7 +11,7 @@ public:
     MAVLinkManager(RCInput* rc, Failsafe* fs);
     void begin(HardwareSerial& serialPort);
     void process();
-    void update(float roll, float pitch, float throttle, float yaw, int16_t hallSlope);
+    void update(float roll, float pitch, float throttle, float yaw, int16_t hallSlope, float rpm, uint8_t grip);
 
 private:
     HardwareSerial* port;
@@ -35,5 +35,5 @@ private:
 
 
     void sendHeartbeat();
-    void sendAttitude(float roll, float pitch, float throttle, float yaw, int16_t hallSlope);
+    void sendAttitude(float roll, float pitch, float throttle, float yaw, int16_t hallSlope, float rpm, uint8_t grip);
 };
