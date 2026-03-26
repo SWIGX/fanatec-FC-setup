@@ -30,8 +30,13 @@ void GripEstimator::update(float rpm, float accelX, float accelY, float dt) {
         return;
     }
 
-    // Only recompute grip when RPM changes (new Hall pulse arrived)
-    if (rpm == _prevRPM) return;
+    // If RPM hasn't changed, decay grip toward 100 (no slip detected while coasting)
+    if (rpm == _prevRPM) {
+        if (_timeSinceRPMChange > COAST_TIMEOUT) {
+            _smoothedGrip += SMOOTHING_ALPHA * (100.0f - _smoothedGrip);
+        }
+        return;
+    }
 
     if (_timeSinceRPMChange <= 0.0f || _accelCount == 0) {
         _prevRPM = rpm;
@@ -47,7 +52,7 @@ void GripEstimator::update(float rpm, float accelX, float accelY, float dt) {
 
     // Wheel acceleration between Hall pulses
     float wheelAccelRPMperS = (rpm - _prevRPM) / _timeSinceRPMChange;
-    float wheelAccelG = fabsf(wheelAccelRPMperS) / WHEEL_ACCEL_SCALE;
+    float wheelAccelG = wheelAccelRPMperS / WHEEL_ACCEL_SCALE;
 
     // Discrepancy: wheel accelerating more than the body = slip
     float discrepancy = 0.0f;
