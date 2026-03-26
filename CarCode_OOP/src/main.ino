@@ -26,12 +26,12 @@ void setup() {
     
 }
 
-static unsigned long prevLoopTime = 0;
+static unsigned long prevLoopTimeUs = 0;
 
 void loop() {
-    unsigned long now = millis();
-    float dt = (prevLoopTime == 0) ? 0.0f : (now - prevLoopTime) / 1000.0f;
-    prevLoopTime = now;
+    unsigned long nowUs = micros();
+    float dt = (prevLoopTimeUs == 0) ? 0.0f : (nowUs - prevLoopTimeUs) / 1000000.0f;
+    prevLoopTimeUs = nowUs;
 
     imu.update();
     hall.update();
