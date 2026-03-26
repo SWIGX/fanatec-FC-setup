@@ -21,7 +21,7 @@ public:
 
 private:
     static constexpr uint8_t MAX_FIFO_SIZE = 20;
-    static constexpr uint32_t WATCHDOG_TIMEOUT_MS = 1000UL;
+    static constexpr uint32_t WATCHDOG_TIMEOUT_MS = 3000UL;
     static constexpr uint32_t MIN_PULSE_INTERVAL_US = 300UL;
 
     static Hall* instance;
