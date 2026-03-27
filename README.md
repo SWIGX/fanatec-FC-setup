@@ -66,5 +66,5 @@ This code runs on the **Teensy 4.1** and handles:
 >
 >| Date       | Author      | Change |
 >|------------|-------------|-------|
->| 2026-06-12 | Tobias Albertsen | A lot |
+>| 2026-03-12 | Tobias Albertsen | A lot |
 >| yyyy-mm-dd | {Your Name} | {your changes} |
